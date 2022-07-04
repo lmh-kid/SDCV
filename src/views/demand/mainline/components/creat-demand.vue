@@ -4,15 +4,45 @@
       <a-form-item field="name" label="名称">
         <a-input v-model="form.name" />
       </a-form-item>
-      {{ form.baselinetype }}
-      <a-form-item field="post" label="基线来源">
+      <a-form-item label="基线来源">
         <a-select v-model="form.baselinetype" allow-clear>
           <a-option value="main">主线版本</a-option>
           <a-option value="demand">需求分支</a-option>
         </a-select>
       </a-form-item>
-      <a-form-item field="post" label="描述">
-        <a-input v-model="form.describe" />
+      <a-form-item field="baseline" label="基线分支">
+        <a-select v-model="form.baseline" allow-clear>
+          <a-option
+            v-for="item in mainlineData"
+            :key="item"
+            :value="item.mainlineid"
+            >{{ item.name }}</a-option
+          >
+        </a-select>
+      </a-form-item>
+      <!-- <a-form-item field="baseline" label="基线分支">
+        <a-select v-model="form.baseline" allow-clear>
+          <a-option v-for="item in demandData" :key="item">需求分支</a-option>
+        </a-select>
+      </a-form-item> -->
+      <a-form-item field="branchname" label="分支名称">
+        <a-input v-model="form.branchname" />
+      </a-form-item>
+      <a-form-item field="targetversion" label="目标版本">
+        <a-select v-model="form.targetversion" allow-clear>
+          <a-option
+            v-for="item in mainlineData"
+            :key="item"
+            :value="item.mainlineid"
+            >{{ item.name }}</a-option
+          >
+        </a-select>
+      </a-form-item>
+      <a-form-item label="需求类型">
+        <a-select v-model="form.type" allow-clear>
+          <a-option value="bug">BUG</a-option>
+          <a-option value="demand">需求</a-option>
+        </a-select>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -33,12 +63,31 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { createMainline } from '@/api/demand';
+  import { createDemand, mainlineList, demandList } from '@/api/demand';
 
   const visible = ref(false);
   const form = ref<any>({});
+  const mainlineData = ref<any>([]);
+  const demandData = ref<any>([]);
 
-  const submit = async () => {};
+  const getData = async () => {
+    const res = await mainlineList();
+    mainlineData.value = res.data;
+  };
+  getData();
+
+  const getDemandList = async () => {
+    const res = await demandList();
+    demandData.value = res.data;
+  };
+  getDemandList();
+
+  const submit = async () => {
+    await createDemand({
+      ...form.value,
+      describe: form.value.describe || '',
+    });
+  };
 
   defineExpose({
     visible,

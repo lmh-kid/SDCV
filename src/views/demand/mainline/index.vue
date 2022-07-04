@@ -27,6 +27,9 @@
       </a-button>
     </a-space>
   </div>
+  <div>
+    <a-table :columns="columns" :data="demandData" />
+  </div>
 
   <creatMainlineVue ref="creatMainline" />
   <creatDemandVue ref="createDemand" />
@@ -34,11 +37,13 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { mainlineList } from '@/api/demand';
+  import { mainlineList, demandList } from '@/api/demand';
   import creatMainlineVue from './components/creat-mainline.vue';
   import creatDemandVue from './components/creat-demand.vue';
 
   const mainlineData = ref<any>();
+  const demandData = ref<any>();
+
   const columns = [
     {
       title: '名称',
@@ -62,6 +67,12 @@
     mainlineData.value = res.data;
   };
   getData();
+
+  const getDemandList = async () => {
+    const res = await demandList();
+    demandData.value = res.data;
+  };
+  getDemandList();
 
   const creatMainline = ref();
   const createDemand = ref();
