@@ -1,20 +1,19 @@
 import { DEFAULT_LAYOUT } from '@/router/constans';
 
 export default {
-  path: '/dashboard',
-  name: 'dashboard',
+  path: '/demandControl',
+  name: 'demandControl',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.dashboard',
+    locale: 'menu.demandControl',
     requiresAuth: true,
-    icon: 'icon-dashboard',
     order: 0,
   },
   children: [
     {
       path: 'demand',
       name: 'demand',
-      component: () => import('@/views/demand/index.vue'),
+      component: () => import('@/views/demands/demand-list/index.vue'),
       meta: {
         locale: 'menu.demand',
         requiresAuth: true,
@@ -22,11 +21,11 @@ export default {
       },
     },
     {
-      path: 'workplace',
-      name: 'Workplace',
-      component: () => import('@/views/dashboard/workplace/index.vue'),
+      path: 'baseline',
+      name: 'baseline',
+      component: () => import('@/views/demands/baseline-list/index.vue'),
       meta: {
-        locale: 'menu.dashboard.workplace',
+        locale: 'menu.baseline',
         requiresAuth: true,
         roles: ['*'],
       },
