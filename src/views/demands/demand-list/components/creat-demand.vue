@@ -10,21 +10,10 @@
           <a-option value="demand">需求分支</a-option>
         </a-select>
       </a-form-item>
+      {{ form.baseline }}
       <a-form-item field="baseline" label="基线分支">
-        <a-select v-model="form.baseline" allow-clear>
-          <a-option
-            v-for="item in mainlineData"
-            :key="item"
-            :value="item.mainlineid"
-            >{{ item.name }}</a-option
-          >
-        </a-select>
+        <base-line v-model="form.baseline" />
       </a-form-item>
-      <!-- <a-form-item field="baseline" label="基线分支">
-        <a-select v-model="form.baseline" allow-clear>
-          <a-option v-for="item in demandData" :key="item">需求分支</a-option>
-        </a-select>
-      </a-form-item> -->
       <a-form-item field="branchname" label="分支名称">
         <a-input v-model="form.branchname" />
       </a-form-item>
@@ -63,18 +52,13 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { createDemand, mainlineList, demandList } from '@/api/demand';
+  import { createDemand, demandList } from '@/api/demand';
+  import BaseLine from '@/components/list-model/base-line.vue';
 
   const visible = ref(false);
   const form = ref<any>({});
   const mainlineData = ref<any>([]);
   const demandData = ref<any>([]);
-
-  const getData = async () => {
-    const res = await mainlineList();
-    mainlineData.value = res.data;
-  };
-  getData();
 
   const getDemandList = async () => {
     const res = await demandList();
