@@ -10,7 +10,6 @@
           <a-option value="demand">需求分支</a-option>
         </a-select>
       </a-form-item>
-      {{ form.baseline }}
       <a-form-item field="baseline" label="基线分支">
         <base-line v-model="form.baseline" />
       </a-form-item>
@@ -18,14 +17,7 @@
         <a-input v-model="form.branchname" />
       </a-form-item>
       <a-form-item field="targetversion" label="目标版本">
-        <a-select v-model="form.targetversion" allow-clear>
-          <a-option
-            v-for="item in mainlineData"
-            :key="item"
-            :value="item.mainlineid"
-            >{{ item.name }}</a-option
-          >
-        </a-select>
+        <base-line v-model="form.targetversion" :multiple="true" />
       </a-form-item>
       <a-form-item label="需求类型">
         <a-select v-model="form.type" allow-clear>

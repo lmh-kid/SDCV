@@ -13,7 +13,22 @@
       </a-space>
     </div>
     <div>
-      <a-table :columns="columns" :data="mainlineData" />
+      <a-table :columns="columns" :data="mainlineData">
+        <template #option="{ record }">
+          <a-button
+            type="primary"
+            size="small"
+            @click="deletebBaseline(record.mainlineid)"
+            >删除</a-button
+          >&nbsp;
+          <a-button
+            type="primary"
+            size="small"
+            @click="goToDetail(record.mainlineid)"
+            >详情</a-button
+          >
+        </template>
+      </a-table>
     </div>
     <creatMainlineVue ref="creatMainline" />
   </global-page>
@@ -44,6 +59,7 @@
     {
       title: '操作',
       dataIndex: 'mainlineid',
+      slotName: 'option',
     },
   ];
 
@@ -52,4 +68,10 @@
     mainlineData.value = res.data;
   };
   getData();
+  const deletebBaseline = async (mainlineid: number) => {
+    console.log(mainlineid);
+  };
+  const goToDetail = async (mainlineid: number) => {
+    console.log(mainlineid);
+  };
 </script>

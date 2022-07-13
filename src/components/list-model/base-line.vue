@@ -2,6 +2,7 @@
   <a-select
     v-model="beaselineId"
     allow-clear
+    :multiple="props.multiple"
     @change="emit('input', beaselineId)"
   >
     <a-option
@@ -20,9 +21,13 @@
   const baseLineList = ref<any>([]);
   const beaselineId = ref<string>();
 
-  const props = withDefaults(defineProps<{ value: string }>(), {
-    value: '',
-  });
+  const props = withDefaults(
+    defineProps<{ value: string; multiple: boolean }>(),
+    {
+      value: '',
+      multiple: false,
+    }
+  );
   const emit = defineEmits(['input']);
 
   beaselineId.value = toRefs(props).value.value;
